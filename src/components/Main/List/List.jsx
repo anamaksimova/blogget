@@ -5,6 +5,8 @@ import React from 'react';
 
 export const List = () => (
   <ul className={style.list}>
-    <Post />
-  </ul>);
+    <Post/>
+  </ul>
+);
+
 

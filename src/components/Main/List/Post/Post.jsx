@@ -7,19 +7,24 @@ import Content from './Content';
 import DeleteBtn from './DeleteBtn';
 import {useContext} from 'react';
 import {postsContext} from '../../../../context/postsContext';
+
 export const Post = () => {
   // const {title, author, ups, created} = postData;
-  const {id, title, author, ups, created} = useContext(postsContext);
-  return (
-    <li key={id} className={style.post}>
-      <img className={style.img} src={notphoto} alt={title}/>
-      <Content title={title} author={author}/>
-      <Rating ups={ups}/>
-      <DeleteBtn/>
-      <time className={style.date} dateTime={created}>
-        {formatDate(created)}</time>
-    </li>
-  );
+  const {posts} = useContext(postsContext);
+
+  return (posts.map(el => {
+    const {id, title, author, ups, created} = el;
+    return (
+      <li key={id} className={style.post}>
+        <img className={style.img} src={notphoto} alt={title}/>
+        <Content title={title} author={author}/>
+        <Rating ups={ups}/>
+        <DeleteBtn/>
+        <time className={style.date} dateTime={created}>
+          {formatDate(created)}</time>
+      </li>
+    );
+  }));
 };
 // Post.propTypes = {
 //   postData: PropTypes.object,
