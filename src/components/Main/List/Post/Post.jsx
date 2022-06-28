@@ -17,7 +17,7 @@ export const Post = () => {
     return (
       <li key={id} className={style.post}>
         <img className={style.img} src={notphoto} alt={title}/>
-        <Content title={title} author={author}/>
+        <Content title={title} author={author} id={id}/>
         <Rating ups={ups}/>
         <DeleteBtn/>
         <time className={style.date} dateTime={created}>
