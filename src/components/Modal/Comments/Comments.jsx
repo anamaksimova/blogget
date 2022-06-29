@@ -12,7 +12,7 @@ export const Comments = ({comments}) => {
       coms = comments.map(({author, body, created, id}) => (
         <li key={id} className={style.item}>
           <h3 className={style.author}>{author}</h3>
-          <p className={style.comment}>
+          <div className={style.comment}>
             <Markdown options={{
               overrides: {
                 a: {
@@ -24,7 +24,7 @@ export const Comments = ({comments}) => {
             }}>
               {body}
             </Markdown>
-          </p>
+          </div>
           <time className={style.comment} dateTime={created}>
             {formatDate(created)}</time>
         </li>
