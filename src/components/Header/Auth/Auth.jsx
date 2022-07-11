@@ -5,12 +5,12 @@ import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import PropTypes from 'prop-types';
 import {Text} from '../../../UI/Text';
-import {tokenContext} from '../../../context/tokenContext';
 import {authContext} from '../../../context/authContext';
-
+import {deleteToken} from '../../../store';
+import {useSelector} from 'react-redux';
 
 export const Auth = () => {
-  const {delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
   const [isLogout, setIsLogout] = useState(false);
   const {auth, clearAuth} = useContext(authContext);
   return (
@@ -24,7 +24,7 @@ export const Auth = () => {
           {isLogout && <button className={style.logout}
             onClick={() => {
               clearAuth();
-              delToken();
+              deleteToken(token);
             }
             }>Выйти</button>}
         </button>
@@ -39,5 +39,5 @@ export const Auth = () => {
 
 Auth.propTypes = {
   token: PropTypes.string,
-  delToken: PropTypes.func,
+  deleteToken: PropTypes.func,
 };

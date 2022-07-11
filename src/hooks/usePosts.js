@@ -1,10 +1,10 @@
-import {useEffect, useState, useContext} from 'react';
-// import {assignId} from '../utils/generateRandomId';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-// import {postsContext} from '../context/postsContext';
-import {tokenContext} from '../context/tokenContext';
+import {deleteToken} from '../store';
+import {useSelector} from 'react-redux';
+
 export const usePosts = () => {
-  const {token, delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     if (!token) return;
@@ -14,7 +14,7 @@ export const usePosts = () => {
       },
     }).then(response => {
       if (response.status === 401) {
-        delToken();
+        deleteToken(token);
       }
       return response.json();
     })

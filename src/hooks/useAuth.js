@@ -1,8 +1,10 @@
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
+import {deleteToken} from '../store';
+import {useSelector} from 'react-redux';
 export const useAuth = () => {
-  const {token, delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
+
   const [auth, setAuth] = useState({});
   useEffect(() => {
     if (!token) return;
@@ -13,7 +15,7 @@ export const useAuth = () => {
     }).then(response => {
       if (response.status === 401) {
         console.log(response.status);
-        delToken();
+        deleteToken(token);
       }
       return response.json();
     })

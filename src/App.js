@@ -1,25 +1,20 @@
-import Header from "./components/Header";
-import Main from "./components/Main";
-// import {useToken} from './hooks/useToken';
-// import {tokenContext} from './context/tokenContext';
+import Header from './components/Header';
+import Main from './components/Main';
+import {store} from './store';
+import {Provider} from 'react-redux';
 import {AuthContextProvider} from './context/authContext';
-import {TokenContextProvider} from './context/tokenContext';
 import {PostsContextProvider} from './context/postsContext';
-function App() {
-  // const [token, delToken] = useToken('');
-  // const {Provider} = tokenContext;
-  // console.log(token);
-  return (
-    <TokenContextProvider>
-      <AuthContextProvider>
-        <PostsContextProvider>
-          <Header />
-          <Main />
-        </PostsContextProvider>
-      </AuthContextProvider>
-    </TokenContextProvider>
 
-  );
-}
+
+const App = () => (
+  <Provider store={store}>
+    <AuthContextProvider>
+      <PostsContextProvider>
+        <Header />
+        <Main />
+      </PostsContextProvider>
+    </AuthContextProvider>
+  </Provider>
+);
 
 export default App;

@@ -1,8 +1,11 @@
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState} from 'react';
 import {URL_API} from '../api/const';
-import {tokenContext} from '../context/tokenContext';
+
+import {deleteToken} from '../store';
+import {useSelector} from 'react-redux';
 export const useCommentsData = (id) => {
-  const {token, delToken} = useContext(tokenContext);
+  const token = useSelector(state => state.token);
+  // const {token, delToken} = useContext(tokenContext);
   const [comments, setComments] = useState({});
   useEffect(() => {
     if (!token) return;
@@ -12,7 +15,7 @@ export const useCommentsData = (id) => {
       },
     }).then(response => {
       if (response.status === 401) {
-        delToken();
+        deleteToken(token);
       }
       return response.json();
     })
