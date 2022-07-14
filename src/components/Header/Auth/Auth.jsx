@@ -1,21 +1,24 @@
 import style from './Auth.module.css';
-import {useState, useContext} from 'react';
-
+import {useState} from 'react';
+import {useAuth} from '../../../hooks/useAuth';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import PropTypes from 'prop-types';
 import {Text} from '../../../UI/Text';
-import {authContext} from '../../../context/authContext';
-import {deleteToken} from '../../../store';
-import {useSelector} from 'react-redux';
+import {deleteToken} from '../../../store/tokenReducer';
+import {useDispatch} from 'react-redux';
+import AuthLoader from '../../../UI/AuthLoader';
+
 
 export const Auth = () => {
-  const token = useSelector(state => state.token);
   const [isLogout, setIsLogout] = useState(false);
-  const {auth, clearAuth} = useContext(authContext);
+  const [auth, loading, clearAuth] = useAuth();
+  const dispatch = useDispatch();
   return (
     <div className={style.container}>
-      {auth.name ? (
+      {loading ? (
+      <AuthLoader/>
+        ) : auth.name ? (
         <button className={style.btn} onClick={() => {
           setIsLogout(!isLogout);
         }}>
@@ -24,7 +27,7 @@ export const Auth = () => {
           {isLogout && <button className={style.logout}
             onClick={() => {
               clearAuth();
-              deleteToken(token);
+              dispatch(deleteToken());
             }
             }>Выйти</button>}
         </button>
@@ -39,5 +42,5 @@ export const Auth = () => {
 
 Auth.propTypes = {
   token: PropTypes.string,
-  deleteToken: PropTypes.func,
+  // deleteToken: PropTypes.func,
 };
