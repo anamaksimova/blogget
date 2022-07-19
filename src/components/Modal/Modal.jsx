@@ -7,18 +7,21 @@ import {useCommentsData} from '../../hooks/useCommentsData';
 import {FormComment} from './FormComment/FormComment';
 import {Comments} from './Comments/Comments';
 import {useSelector} from 'react-redux';
-export const Modal = ({id, onClose, isModalOpen}) => {
+import {useParams, useNavigate} from 'react-router-dom';
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   const {title, author, markdown, comment} = useCommentsData(id);
   const states = useSelector(state => state.commentsReducer.states);
+  const closeOnEscapeKey = e => {
+    if (e.key === 'Escape') navigate(`/category/${page}`);
+  };
   useEffect(() => {
-    const closeOnEscapeKey = e => {
-      if (e.key === 'Escape') onClose();
-    };
     document.body.addEventListener('keydown', closeOnEscapeKey);
     return () => {
       document.body.removeEventListener('keydown', closeOnEscapeKey);
     };
-  }, [isModalOpen]);
+  }, []);
 
   return (ReactDOM.createPortal(
     <div className={style.overlay} >
@@ -34,7 +37,9 @@ export const Modal = ({id, onClose, isModalOpen}) => {
             <p className={style.author}>{author}</p>
             <FormComment/>
             <Comments comments={comment}/>
-            <button className={style.close} onClick={onClose}>
+            <button className={style.close} onClick={() => {
+              navigate(`/category/${page}`);
+            }}>
               <CloseIcon/></button>
           </div>
         )}

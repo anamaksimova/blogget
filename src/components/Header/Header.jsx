@@ -4,15 +4,17 @@ import Logo from './Logo';
 import Auth from './Auth';
 import Search from './Search';
 import Heading from './Heading';
-// import PropTypes from 'prop-types';
-// import {tokenContext} from '../../context/tokenContext';
-
+import {Route, Routes} from 'react-router-dom';
 export const Header = () => (
   <header className={style.header}>
     <Layout>
       <div className={style.gridContainer}>
         <Logo/>
-        <Heading text='Заголовок'/>
+        <Routes>
+          <Route path='/' element={<Heading text='Главная'/>}></Route>
+          <Route path={`/category/:page`}
+            element={<Heading text='Посты'/>}></Route>
+        </Routes>
         <Search/>
         <Auth/>
       </div>

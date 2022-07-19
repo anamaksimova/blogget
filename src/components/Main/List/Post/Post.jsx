@@ -11,9 +11,8 @@ import AuthLoader from '../../../../UI/AuthLoader';
 export const Post = () => {
   const [posts] = usePosts();
   const states = useSelector(state => state.postReducer.states);
-  console.log('states: ', states);
   return (posts.map(el => {
-    const {id, title, author, ups, created} = el;
+    const {id, title, author, ups, created} = el.data;
     return (<>
       {states === 'loading' && (<AuthLoader/>)}
       {states === 'loaded' && (
